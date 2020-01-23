@@ -25,9 +25,10 @@ function domainColor(color, data) {
  */
 function parseDate(data) {
   // TODO: Convert the dates from the CSV file to date objects
+  var parseDate = d3.timeParse("%d/%m/%Y")
   for(var i = 0; i< data.length; i++)
   {
-    data[i].Date = new Date(data[i].Date)
+    data[i].Date = parseDate(data[i].Date)
   }
 }
 
@@ -45,8 +46,11 @@ function parseDate(data) {
  *                    {
  *                      name: string      // Street name
  *                      values: [         // A table with 365 entries, one for each day
- *                        date: Date,     // The date
- *                        count: number   // The quantity of bikes on that day (convert it with parseInt)
+ *                        {
+ *                          date: Date,     // The date
+ *                          count: number   // The quantity of bikes on that day (convert it with parseInt)
+ *                        },
+ *                         ...
  *                      ]
  *                    },
  *                     ...
@@ -54,7 +58,23 @@ function parseDate(data) {
  */
 function createSources(color, data) {
   // TODO: Return the object with the given format
-
+  let arr = [] 
+  let cols = JSON.parse(JSON.stringify(data.columns))
+  let streets = cols.splice(1,9)
+  for(let street of streets)
+  {
+    let obj = {}
+    obj["name"] = street
+    obj["values"]= data.map(d => {
+      return { 
+          date: d["Date"],
+          count: d[street]
+        } 
+    })
+    arr.push(obj)
+  }
+  console.log(arr)
+  return arr
 }
 
 /**
