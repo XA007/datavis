@@ -12,9 +12,9 @@
  */
 function domainColor(color, data) {
   // TODO: Define the domain of variable "color" by associating a street name to a specific color
-  var streets = data.columns.splice(1,9)
-  color.domain(streets);
-  console.log(color.domain())
+  let cols = JSON.parse(JSON.stringify(data.columns))
+  let streets = cols.splice(1,9)
+  color.domain(streets)
 }
 
 /**
@@ -46,8 +46,11 @@ function parseDate(data) {
  *                    {
  *                      name: string      // Street name
  *                      values: [         // A table with 365 entries, one for each day
- *                        date: Date,     // The date
- *                        count: number   // The quantity of bikes on that day (convert it with parseInt)
+ *                        {
+ *                          date: Date,     // The date
+ *                          count: number   // The quantity of bikes on that day (convert it with parseInt)
+ *                        },
+ *                         ...
  *                      ]
  *                    },
  *                     ...
@@ -55,10 +58,23 @@ function parseDate(data) {
  */
 function createSources(color, data) {
   // TODO: Return the object with the given format
-  const dt = d3.nest()
-  .key(function(d) { return d.Berri; })
-  .entries(data);
-  console.log(dt)
+  let arr = [] 
+  let cols = JSON.parse(JSON.stringify(data.columns))
+  let streets = cols.splice(1,9)
+  for(let street of streets)
+  {
+    let obj = {}
+    obj["name"] = street
+    obj["values"]= data.map(d => {
+      return { 
+          date: d["Date"],
+          count: d[street]
+        } 
+    })
+    arr.push(obj)
+  }
+  console.log(arr)
+  return arr
 }
 
 /**
