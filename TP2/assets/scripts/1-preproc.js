@@ -12,10 +12,9 @@
  */
 function domainColor(color, data) {
   // TODO: Define the domain of variable "color" by associating a street name to a specific color
-  for (let e of data.columns) 
-  {
-    // console.log(e, color(e)); 
-  }
+  var streets = data.columns.splice(1,9)
+  color.domain(streets);
+  console.log(color.domain())
 }
 
 /**
