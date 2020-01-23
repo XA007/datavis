@@ -54,10 +54,7 @@ function parseDate(data) {
  */
 function createSources(color, data) {
   // TODO: Return the object with the given format
-  const dt = d3.nest()
-  .key(function(d) { return d.Berri; })
-  .entries(data);
-  console.log(dt)
+
 }
 
 /**
