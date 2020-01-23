@@ -45,8 +45,11 @@ function parseDate(data) {
  *                    {
  *                      name: string      // Street name
  *                      values: [         // A table with 365 entries, one for each day
- *                        date: Date,     // The date
- *                        count: number   // The quantity of bikes on that day (convert it with parseInt)
+ *                        {
+ *                          date: Date,     // The date
+ *                          count: number   // The quantity of bikes on that day (convert it with parseInt)
+ *                        },
+ *                         ...
  *                      ]
  *                    },
  *                     ...
@@ -54,10 +57,23 @@ function parseDate(data) {
  */
 function createSources(color, data) {
   // TODO: Return the object with the given format
-  // const dt = d3.nest()
-  // .key(function(d) { return d.columns[1]; })
-  // .entries(data);
-  // // console.log(data)
+  let arr = [] 
+  let cols = JSON.parse(JSON.stringify(data.columns))
+  let streets = cols.splice(1,9)
+  for(let street of streets)
+  {
+    let obj = {}
+    obj["name"] = street
+    obj["values"]= data.map(d => {
+      return { 
+          date: d["Date"],
+          count: d[street]
+        } 
+    })
+    arr.push(obj)
+  }
+  console.log(arr)
+  return arr
 }
 
 /**
