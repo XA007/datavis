@@ -26,9 +26,9 @@ function domainColor(color, data) {
 function parseDate(data) {
   // TODO: Convert the dates from the CSV file to date objects
   const date = d3.timeParse("%d/%m/%Y")
-  for(var i = 0; i< data.length; i++)
+  for(let d of data)
   {
-    data[i].Date = date(data[i].Date)
+    d.Date = date(d.Date)
   }
 }
 
@@ -58,22 +58,22 @@ function parseDate(data) {
  */
 function createSources(color, data) {
   // TODO: Return the object with the given format
-  let arr = [] 
+  const sources = [] 
   let cols = JSON.parse(JSON.stringify(data.columns))
   let streets = cols.splice(1,9)
   for(let street of streets)
   {
-    let obj = {}
-    obj["name"] = street
-    obj["values"]= data.map(d => {
+    let source = {}
+    source["name"] = street
+    source["values"]= data.map(d => {
       return { 
           date: d["Date"],
           count: d[street]
         } 
     })
-    arr.push(obj)
+    sources.push(source)
   }
-  return arr
+  return sources
 }
 
 /**
@@ -103,9 +103,10 @@ function domainY(yFocus, yContext, sources) {
   const maxValues = []
   for (let v of sources)
   {
-    const c = v.values.map(d => d.count)
-    const max = Math.max(...c)
-    maxValues.push(max)
+    const count = v.values.map(d => d.count)
+    const stationMaxCount = Math.max(...count)
+    maxValues.push(stationMaxCount)
   } 
   yFocus.domain([0, d3.max(maxValues)])
+  yContext.domain([0, d3.max(maxValues)])
 }
