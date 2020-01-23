@@ -25,10 +25,10 @@ function domainColor(color, data) {
  */
 function parseDate(data) {
   // TODO: Convert the dates from the CSV file to date objects
-  var parseDate = d3.timeParse("%d/%m/%Y")
+  const date = d3.timeParse("%d/%m/%Y")
   for(var i = 0; i< data.length; i++)
   {
-    data[i].Date = parseDate(data[i].Date)
+    data[i].Date = date(data[i].Date)
   }
 }
 
@@ -73,7 +73,6 @@ function createSources(color, data) {
     })
     arr.push(obj)
   }
-  console.log(arr)
   return arr
 }
 
@@ -86,7 +85,8 @@ function createSources(color, data) {
  */
 function domainX(xFocus, xContext, data) {
   // TODO: specify the domains for the "xFocus" and "xContext" variables for the X axis
-
+  xFocus.domain(d3.extent(data.map( d => d.Date )))
+  xContext.domain(d3.extent(data.map(d => d.Date)))
 }
 
 /**
@@ -98,5 +98,11 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: specify the domains for the "xFocus" and "xContext" variables for the Y axis
-
+  // yFocus.domain(d3.extent(source.map( d => 
+  //   { 
+  //     return d.name; 
+  //   }
+  //   )))
+  // yContext.domain(d3.extent(source.map(function(d) { return d.name})))
+  console.log(sources)
 }
