@@ -25,10 +25,10 @@ function domainColor(color, data) {
  */
 function parseDate(data) {
   // TODO: Convert the dates from the CSV file to date objects
-  var parseDate = d3.timeParse("%d/%m/%Y")
-  for(var i = 0; i< data.length; i++)
+  const date = d3.timeParse("%d/%m/%Y")
+  for(let d of data)
   {
-    data[i].Date = parseDate(data[i].Date)
+    d.Date = date(d.Date)
   }
 }
 
@@ -58,23 +58,22 @@ function parseDate(data) {
  */
 function createSources(color, data) {
   // TODO: Return the object with the given format
-  let arr = [] 
+  const sources = [] 
   let cols = JSON.parse(JSON.stringify(data.columns))
   let streets = cols.splice(1,9)
   for(let street of streets)
   {
-    let obj = {}
-    obj["name"] = street
-    obj["values"]= data.map(d => {
+    let source = {}
+    source["name"] = street
+    source["values"]= data.map(d => {
       return { 
           date: d["Date"],
           count: d[street]
         } 
     })
-    arr.push(obj)
+    sources.push(source)
   }
-  console.log(arr)
-  return arr
+  return sources
 }
 
 /**
@@ -86,7 +85,8 @@ function createSources(color, data) {
  */
 function domainX(xFocus, xContext, data) {
   // TODO: specify the domains for the "xFocus" and "xContext" variables for the X axis
-
+  xFocus.domain(d3.extent(data.map( d => d.Date )))
+  xContext.domain(d3.extent(data.map(d => d.Date)))
 }
 
 /**
@@ -98,5 +98,15 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: specify the domains for the "xFocus" and "xContext" variables for the Y axis
-
+  // yFocus.domain([0, d3.max(sources.map(function(d) { return 300; }))])
+  // yContext.domain([0, d3.max(sources.map(function(d) { return 300; }))])
+  const maxValues = []
+  for (let v of sources)
+  {
+    const count = v.values.map(d => d.count)
+    const stationMaxCount = Math.max(...count)
+    maxValues.push(stationMaxCount)
+  } 
+  yFocus.domain([0, d3.max(maxValues)])
+  yContext.domain([0, d3.max(maxValues)])
 }
