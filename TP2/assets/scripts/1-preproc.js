@@ -98,11 +98,14 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: specify the domains for the "xFocus" and "xContext" variables for the Y axis
-  // yFocus.domain(d3.extent(source.map( d => 
-  //   { 
-  //     return d.name; 
-  //   }
-  //   )))
-  // yContext.domain(d3.extent(source.map(function(d) { return d.name})))
-  console.log(sources)
+  // yFocus.domain([0, d3.max(sources.map(function(d) { return 300; }))])
+  // yContext.domain([0, d3.max(sources.map(function(d) { return 300; }))])
+  const maxValues = []
+  for (let v of sources)
+  {
+    const c = v.values.map(d => d.count)
+    const max = Math.max(...c)
+    maxValues.push(max)
+  } 
+  yFocus.domain([0, d3.max(maxValues)])
 }
