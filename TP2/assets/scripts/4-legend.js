@@ -14,78 +14,30 @@
  */
 function legend(svg, sources, color) {
   // TODO: Create the legend that supplements the graphic.
-  const xTranslation = 60
-  const yTranslation = 30
-  const legendBoxFontSize = "12px"
-
-  legend = svg.append("g")
-  .attr("class","legend")
-  .attr("transform","translate(" + xTranslation + "," + yTranslation + ")")
-  .style("font-size",legendBoxFontSize)
-
-  // Legned background
-  const width = 180
-  const height = 250
-  const opacity = 0
   
-  legend.append("rect")
-  .attr("width", width)
-  .attr("height", height)
-  .attr("opacity", opacity)
+// Add asquare to the legen
+  var size = 15
+  svg.selectAll("squares")
+    .data(sources)
+    .enter()
+    .append("rect")
+      .attr("x", 75)
+      .attr("y", (s,i) => { return 10 + i*(size+10)})
+      .attr("width", size)
+      .attr("height", size)
+      .style("fill", s => color(s.name))
+      .attr("stroke","#000")
 
-  legend = legend.selectAll(".oneLegend")
-  .data(color.domain())
-  .enter()
-
-  const padding = 10
-  const squareSize = 15
-  const legendOffset = 10
-  const strokeColor = "#000"
-
-  //append legend elements
-  legend.append("rect")
-  .attr("x", legendOffset)
-  .attr("y", function(d,i){ return i*(squareSize + padding)})
-  .attr("class", "oneLegend")
-  .attr("width", squareSize)
-  .attr("height", squareSize)
-  .attr("stroke", strokeColor)
-  .attr("fill", function(d){ return color(d)})
-  .on("click", function (d) {
-    
-    const clickedSquareColor = "#ffffff"
-    let e = d3.select(this)
-
-    if (e.attr("fill") == clickedSquareColor) 
-    {
-      e.attr("fill",e.attr("originalColor"))
-      .attr("originalColor",null);
-    }
-    else
-    {
-      e.attr("originalColor",e.attr("fill"))
-      .attr("fill",clickedSquareColor);
-    }
-    
-    displayLine(e,color);
-  })
-  .on("mouseover", function (d) {
-    d3.select(this).attr("opacity",0.5)
-  })
-  .on("mouseout", function (d) {
-    d3.select(this).attr("opacity",1)
-  });
-
-  //append legend texts
-  const topOffset = 10
-
-  legend.append("text")
-  .attr("x", legendOffset + squareSize + padding)
-  .attr("y", (d,i) => { return i * (squareSize + padding) + topOffset})
-  .attr("class", "legend_element")
-  .text(function(d) {
-    return d;
-  });
+  svg.selectAll("labels")
+    .data(sources)
+    .enter()
+    .append("text")
+      .attr("x", 80 + size*1.2)
+      .attr("y", (d,i) =>  10 + i*(size+10) + (size/2))
+      .text(s => s.name)
+      .attr("text-anchor", "left")
+      .attr("font-size", "12px")
+      .style("alignment-baseline", "middle")
 
 }
 
