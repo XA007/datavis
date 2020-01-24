@@ -25,7 +25,7 @@ function domainColor(color, data) {
  */
 function parseDate(data) {
   // TODO: Convert the dates from the CSV file to date objects
-  const date = d3.timeParse("%d/%m/%Y")
+  const date = d3.timeParse("%d/%m/%y")
   for(let d of data)
   {
     d.Date = date(d.Date)
