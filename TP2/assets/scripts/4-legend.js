@@ -14,31 +14,26 @@
  */
 function legend(svg, sources, color) {
   // TODO: Create the legend that supplements the graphic.
-  
-// Add asquare to the legen
-  var size = 15
-  svg.selectAll("squares")
-    .data(sources)
-    .enter()
-    .append("rect")
+  const size = 15
+  const rects = svg.selectAll("rects")
+  rects.data(sources)
+      .enter()
+      .append("rect")
       .attr("x", 75)
-      .attr("y", (s,i) => { return 10 + i*(size+10)})
+      .attr("y", (s,i) => { return 5 + i*(size+10)})
       .attr("width", size)
       .attr("height", size)
       .style("fill", s => color(s.name))
-      .attr("stroke","#000")
+      .attr("stroke",s => color(s.name))
 
-  svg.selectAll("labels")
-    .data(sources)
-    .enter()
-    .append("text")
-      .attr("x", 80 + size*1.2)
+  const labels = svg.selectAll("labels")
+  labels.data(sources)
+      .enter()
+      .append("text")
+      .attr("x", 80 + size)
       .attr("y", (d,i) =>  10 + i*(size+10) + (size/2))
       .text(s => s.name)
-      .attr("text-anchor", "left")
-      .attr("font-size", "12px")
-      .style("alignment-baseline", "middle")
-
+      .attr("class", "legend-label")
 }
 
 /**
