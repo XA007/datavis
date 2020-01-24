@@ -18,10 +18,10 @@
  */
 function createLine(x, y) {
   // TODO: Return an SVG line (see "d3.line"). For the curve option, use a curveBasisOpen.
-  // return d3.line()
-  // .x(function(d) { return x(d.values.date); })
-  // .y(function(d) { return y(d.values.count[0]); })
-  // .curve(d3.curveBasisOpen)
+  return d3.line()
+  .x(s => x(s.date))
+  .y(s => y(s.count))
+  .curve(d3.curveBasisOpen)
 }
 
 /**
@@ -36,6 +36,17 @@ function createFocusLineChart(g, sources, line, color) {
 
   // TODO: Draw the "focus" line chart in the "g" group
   // For each "path" you draw, specify this attribute : .attr("clip-path", "url(#clip)").
+  const defineWith = code => (code == "Moyenne") ? 3 : 1
+  const paths = g.selectAll("focus").data(sources)
+  paths.enter()
+  .append("path")
+  .attr("class","line focus")
+  .attr("data-legend", s => s.name)
+  .attr("stroke", s => color(s.name))
+  .attr("fill", "none")
+  .attr("stroke-width", s => defineWith(s.name))
+  .attr("d", s => line(s.values))
+  .attr("clip-path", "url(#clip)")
 }
 
 /**
@@ -48,4 +59,13 @@ function createFocusLineChart(g, sources, line, color) {
  */
 function createContextLineChart(g, sources, line, color) {
   // TODO: Draw the "context" line chart in the "g" group
+  const paths = g.selectAll("context").data(sources)
+  paths.enter()
+  .append("path")
+  .attr("class","line context")
+  .attr("data-legend", s => s.name)
+  .attr("stroke", s => color(s.name))
+  .attr("fill", "none")
+  .attr("stroke-width", 1)
+  .attr("d", s => line(s.values))
 }
