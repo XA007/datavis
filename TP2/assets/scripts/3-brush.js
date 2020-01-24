@@ -23,5 +23,4 @@
 function brushUpdate(brush, g, line, xFocus, xContext, xAxis, yAxis) {
   // TODO: Redraw the focus line chart as a function of the selected zone in the context line chart
 
-
 }

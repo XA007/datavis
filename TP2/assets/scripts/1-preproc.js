@@ -25,7 +25,7 @@ function domainColor(color, data) {
  */
 function parseDate(data) {
   // TODO: Convert the dates from the CSV file to date objects
-  const date = d3.timeParse("%d/%m/%Y")
+  const date = d3.timeParse("%d/%m/%y")
   for(let d of data)
   {
     d.Date = date(d.Date)
@@ -58,19 +58,18 @@ function parseDate(data) {
  */
 function createSources(color, data) {
   // TODO: Return the object with the given format
-  const sources = [] 
-  let cols = JSON.parse(JSON.stringify(data.columns))
-  let streets = cols.splice(1,9)
-  for(let street of streets)
+  const sources = []
+  for(let street of color.domain())
   {
-    let source = {}
-    source["name"] = street
-    source["values"]= data.map(d => {
-      return { 
-          date: d["Date"],
-          count: d[street]
-        } 
-    })
+    const source = {
+      name: street,
+      values : data.map(d => {
+        return { 
+            date: d.Date,
+            count: d[street]
+          } 
+      })
+    } 
     sources.push(source)
   }
   return sources
@@ -98,15 +97,14 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: specify the domains for the "xFocus" and "xContext" variables for the Y axis
-  // yFocus.domain([0, d3.max(sources.map(function(d) { return 300; }))])
-  // yContext.domain([0, d3.max(sources.map(function(d) { return 300; }))])
   const maxValues = []
   for (let v of sources)
   {
     const count = v.values.map(d => d.count)
     const stationMaxCount = Math.max(...count)
     maxValues.push(stationMaxCount)
-  } 
-  yFocus.domain([0, d3.max(maxValues)])
-  yContext.domain([0, d3.max(maxValues)])
+  }
+  const origin = 0 
+  yFocus.domain([origin, d3.max(maxValues)])
+  yContext.domain([origin, d3.max(maxValues)])
 }
