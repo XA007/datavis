@@ -15,16 +15,26 @@
 function legend(svg, sources, color) {
   // TODO: Create the legend that supplements the graphic.
   const size = 15
+  const onClick = function() {
+    const rectIdentifier = ".rect." + this.id
+    const currRectBg = d3.select(rectIdentifier).style("fill")
+    const newRectBg = (currRectBg == "rgb(255, 255, 255)") ? color(this.id) : "#fff"
+    console.log(currRectBg)
+    displayLine(".line." + this.id, newRectBg)
+  }
   const rects = svg.selectAll("rects")
   rects.data(sources)
       .enter()
       .append("rect")
+      .attr("class", s => "rect " + s.name)
+      .attr("id", s => s.name)
       .attr("x", 75)
       .attr("y", (s,i) => { return 5 + i*(size+10)})
       .attr("width", size)
       .attr("height", size)
       .style("fill", s => color(s.name))
       .attr("stroke",s => color(s.name))
+      .on("click", onClick)
 
   const labels = svg.selectAll("labels")
   labels.data(sources)
@@ -46,5 +56,8 @@ function legend(svg, sources, color) {
  */
 function displayLine(element, color) {
   // TODO: Complete the code to show or hide a line depending on the selected item
-  
+  const path = d3.selectAll(element)
+  const pathOpacity = parseInt(path.style("opacity"))
+  const opacity = (pathOpacity === 1) ? 0 : 1  
+  path.style("opacity", opacity)
 }
