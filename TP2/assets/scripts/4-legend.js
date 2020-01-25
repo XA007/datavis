@@ -29,7 +29,7 @@ function legend(svg, sources, color) {
       .attr("class", s => "rect " + s.name)
       .attr("id", s => s.name)
       .attr("x", 75)
-      .attr("y", (s,i) => { return 5 + i*(size+10)})
+      .attr("y", (_,i) => 5 + i*(size+10))
       .attr("width", size)
       .attr("height", size)
       .style("fill", s => color(s.name))
@@ -41,7 +41,7 @@ function legend(svg, sources, color) {
       .enter()
       .append("text")
       .attr("x", 80 + size)
-      .attr("y", (d,i) =>  10 + i*(size+10) + (size/2))
+      .attr("y", (_,i) =>  10 + i*(size+10) + (size/2))
       .text(s => s.name)
       .attr("class", "legend-label")
 }
