@@ -14,14 +14,15 @@
  */
 function legend(svg, sources, color) {
   // TODO: Create the legend that supplements the graphic.
-  const size = 15
   const onClick = function() {
     const rectIdentifier = ".rect." + this.id
-    const currRectBg = d3.select(rectIdentifier).style("fill")
-    const newRectBg = (currRectBg == "rgb(255, 255, 255)") ? color(this.id) : "#fff"
-    console.log(currRectBg)
+    const rect = d3.select(rectIdentifier)
+    const currRectBg = rect.attr("fill")
+    const newRectBg = (currRectBg === "#fff") ? color(this.id) : "#fff"
+    rect.attr("fill",newRectBg)
     displayLine(".line." + this.id, newRectBg)
   }
+  const size = 15
   const rects = svg.selectAll("rects")
   rects.data(sources)
       .enter()
@@ -32,7 +33,7 @@ function legend(svg, sources, color) {
       .attr("y", (_,i) => 5 + i*(size+10))
       .attr("width", size)
       .attr("height", size)
-      .style("fill", s => color(s.name))
+      .attr("fill", s => color(s.name))
       .attr("stroke",s => color(s.name))
       .on("click", onClick)
 
