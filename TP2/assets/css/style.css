@@ -37,3 +37,8 @@ svg {
 .axis text {
   font-size: 12pt;
 }
+
+.legend-label {
+  font-size: 10pt;
+  text-align: "left"
+}
