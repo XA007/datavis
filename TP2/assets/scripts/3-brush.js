@@ -22,7 +22,6 @@
  */
 function brushUpdate(brush, g, line, xFocus, xContext, xAxis, yAxis) {
   // TODO: Redraw the focus line chart as a function of the selected zone in the context line chart
-  console.log(yAxis)
   const s = d3.event.selection || xContext.range
   xFocus.domain(s.map(xContext.invert, xContext))
   g.select(".x.axis").call(xAxis)
