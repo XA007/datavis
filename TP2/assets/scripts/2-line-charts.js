@@ -42,7 +42,7 @@ function createFocusLineChart(g, sources, line, color) {
   .append("path")
   .attr("class", s => "line focus " + s.name)
   .attr("data-legend", s => s.name)
-  .attr("stroke", s => color(s.name))
+  .attr("stroke", s => {return (s.name == "Moyenne")? "#000" : color(s.name)})
   .attr("fill", "none")
   .attr("stroke-width", s => defineWith(s.name))
   .attr("d", s => line(s.values))

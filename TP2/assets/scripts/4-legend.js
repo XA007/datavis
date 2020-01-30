@@ -18,7 +18,8 @@ function legend(svg, sources, color) {
     const rectIdentifier = ".rect." + this.id
     const rect = d3.select(rectIdentifier)
     const currRectBg = rect.attr("fill")
-    const newRectBg = (currRectBg === "#fff") ? color(this.id) : "#fff"
+    const bgColor = (this.id == "Moyenne")? "#000" : color(this.id)
+    const newRectBg = (currRectBg === "#fff") ? bgColor : "#fff"
     rect.attr("fill",newRectBg)
     displayLine(".line." + this.id, newRectBg)
   }
@@ -33,8 +34,8 @@ function legend(svg, sources, color) {
       .attr("y", (_,i) => 5 + i*(size+10))
       .attr("width", size)
       .attr("height", size)
-      .attr("fill", s => color(s.name))
-      .attr("stroke",s => color(s.name))
+      .attr("fill", s => {return (s.name == "Moyenne")? "#000" : color(s.name)})
+      .attr("stroke",s => "#000")
       .on("click", onClick)
 
   const labels = svg.selectAll("labels")
