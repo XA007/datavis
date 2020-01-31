@@ -25,7 +25,8 @@ function brushUpdate(brush, g, line, xFocus, xContext, xAxis, yAxis) {
   const s = d3.event.selection || xContext.range
   xFocus.domain(s.map(xContext.invert, xContext))
   g.select(".x.axis").call(xAxis)
-  g.select(".y.axis").call(yAxis)
   const pathsInFocusArea = g.selectAll(".line.focus")
   pathsInFocusArea.attr("d", s => line(s.values))
+  // Please note that we do not use brush and yAxis. We do not think they are useful for this part
+  // We think that this function's signature is deprecated
 }
