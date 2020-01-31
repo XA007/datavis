@@ -105,6 +105,9 @@ function domainY(yFocus, yContext, sources) {
     maxValues.push(stationMaxCount)
   }
   const origin = 0 
-  yFocus.domain([origin, d3.max(maxValues)])
+  const maxValRegistred = d3.max(maxValues)
+  const step = yFocus.domain([origin, maxValRegistred]).ticks()[1]
+  const roundedMaxVal = Math.ceil(maxValRegistred/step) * step
+  yFocus.domain([origin, roundedMaxVal])
   yContext.domain([origin, d3.max(maxValues)])
 }
