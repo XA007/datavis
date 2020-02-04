@@ -36,13 +36,14 @@ function createFocusLineChart(g, sources, line, color) {
 
   // TODO: Draw the "focus" line chart in the "g" group
   // For each "path" you draw, specify this attribute : .attr("clip-path", "url(#clip)").
+  const blackHex = "#000000"
   const defineWith = code => (code == "Moyenne") ? 3 : 1
   const paths = g.selectAll("focus").data(sources)
   paths.enter()
   .append("path")
   .attr("class", s => "line focus " + s.name)
   .attr("data-legend", s => s.name)
-  .attr("stroke", s => color(s.name))
+  .attr("stroke", s => {return (s.name == "Moyenne")? blackHex : color(s.name)})
   .attr("fill", "none")
   .attr("stroke-width", s => defineWith(s.name))
   .attr("d", s => line(s.values))
@@ -59,12 +60,13 @@ function createFocusLineChart(g, sources, line, color) {
  */
 function createContextLineChart(g, sources, line, color) {
   // TODO: Draw the "context" line chart in the "g" group
+  const blackHex = "#000000"
   const paths = g.selectAll("context").data(sources)
   paths.enter()
   .append("path")
   .attr("class", s => "line context " + s.name)
   .attr("data-legend", s => s.name)
-  .attr("stroke", s => color(s.name))
+  .attr("stroke", s => {return (s.name == "Moyenne")? blackHex : color(s.name)})
   .attr("fill", "none")
   .attr("stroke-width", 1)
   .attr("d", s => line(s.values))
