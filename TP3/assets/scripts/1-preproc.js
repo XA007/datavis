@@ -60,6 +60,9 @@ function domainColor(color, data) {
       zones.push(element.zone)
     }
   });
+
+  color.domain(zones)
+  console.log(color.domain())
 }
 
 /**
