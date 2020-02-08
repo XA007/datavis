@@ -62,7 +62,6 @@ function domainColor(color, data) {
   });
 
   color.domain(zones)
-  console.log(color.domain())
 }
 
 /**
