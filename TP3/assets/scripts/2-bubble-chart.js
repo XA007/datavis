@@ -16,9 +16,34 @@
  */
 function createAxes(g, xAxis, yAxis, height, width) {
   // TODO: Dessiner les axes X et Y du graphique.
-  // Axe horizontal
   
+  // Axe horizontal
+  const x = g.append("g")
+  x.attr("class", "x axis")
+  x.attr("transform", "translate(0," + height + ")")
+  x.call(xAxis);  
 
+  // x label
+  const label_x = g.append("text")
+  const text_x = "espérance de vie (années)"
+  label_x.text(text_x)
+  const marginX = {x: width - 190, y: height - 10}
+  label_x.attr("x", marginX.x)
+  label_x.attr("y", marginX.y)
+  
+  // Axe verticale
+  const y = g.append("g")
+  y.attr("class", "y axis")
+  y.call(yAxis)
+  
+  // y label
+  const label_y = g.append("text")
+  const text_y = "Revenu (USD)" 
+  label_y.text(text_y)
+  label_y.attr("transform", "rotate(-90)")
+  const marginY = {x: -105, y: 20}
+  label_y.attr("x", marginY.x)
+  label_y.attr("y", marginY.y)
 }
 
 /**
@@ -35,5 +60,5 @@ function createAxes(g, xAxis, yAxis, height, width) {
 function createBubbleChart(g, data, x, y, r, color, tip) {
   // TODO: Dessiner les cercles du graphique en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'un cercle est survolé.
-
+  
 }
