@@ -25,11 +25,11 @@ function createAxes(g, xAxis, yAxis, height, width) {
 
   // x label
   const label_x = g.append("text")
-  const text_x = "espérance de vie (années)"
+  const text_x = "Espérance de vie (années)"
   label_x.text(text_x)
-  const marginX = {x: width - 190, y: height - 10}
-  label_x.attr("x", marginX.x)
-  label_x.attr("y", marginX.y)
+  const label_x_position = {x: width - 190, y: height - 10}
+  label_x.attr("x", label_x_position.x)
+  label_x.attr("y", label_x_position.y)
   
   // Axe verticale
   const y = g.append("g")
@@ -41,9 +41,9 @@ function createAxes(g, xAxis, yAxis, height, width) {
   const text_y = "Revenu (USD)" 
   label_y.text(text_y)
   label_y.attr("transform", "rotate(-90)")
-  const marginY = {x: -105, y: 20}
-  label_y.attr("x", marginY.x)
-  label_y.attr("y", marginY.y)
+  const label_y_position = {x: -105, y: 20}
+  label_y.attr("x", label_y_position.x)
+  label_y.attr("y", label_y_position.y)
 }
 
 /**
