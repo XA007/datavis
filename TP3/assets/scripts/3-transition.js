@@ -20,5 +20,12 @@ function transition(g, data, x, y, r) {
        - Mettre à jour la taille du rayon des cercles.
        - La transition doit se faire en 1 seconde.
    */
-
+  const oneSecond = 1000
+  const bubbles = g.selectAll("circle")
+  bubbles.data(data)
+  bubbles.transition("Evolution")
+        .duration(oneSecond)
+        .attr("cx",d => x(d.lifeExpectancy))
+        .attr("cy",d => y(d.income))
+        .attr("r", d => r(d.population))
 }
