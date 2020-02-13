@@ -104,7 +104,6 @@ function transition(g, newData, y, yAxis, height) {
 function getToolTipText(d, currentData, formatPercent) {
   // TODO: Retourner le texte à afficher dans l'infobulle selon le format demandé.
   //       Assurez-vous d'utiliser la fonction "formatPercent" pour formater le pourcentage correctement.
-  const reducer = (total, curr) => total + curr.count;
-  const sum = currentData.destinations.reduce(reducer, 0)
+  const sum = d3.sum(currentData.destinations, d => d.count)
   return ""+ d.count+" ("+formatPercent(d.count/sum)+")";
 }
