@@ -16,7 +16,27 @@
 function createAxes(g, xAxis, yAxis, height) {
   // TODO: Dessiner les axes X et Y du graphique. Assurez-vous d'indiquer un titre pour l'axe Y.
   // Axe horizontal
+  const x = g.append("g")
+  x.attr("class","xAxis")
+  x.attr("transform","translate(0, " + height +")")
+  x.call(xAxis)
+  const x_labels = x.selectAll("text")
+  x_labels.attr("transform", "rotate(30)")
+  x_labels.style("text-anchor", "start");
 
+  // Axe vertical
+  const y = g.append("g")
+  y.attr("class","yAxis")
+  y.call(yAxis)
+    
+  const yTitle = g.append("text")
+  const position = { x: 0, y: 0}
+  yTitle.attr("y", position.x )
+  yTitle.attr("x", position.y )
+  yTitle.attr("dx", "-1.7em")
+  yTitle.attr("dy", "-1em")
+  yTitle.text("Nombre de trajets");
+  yTitle.style("text-anchor", "start") 
 }
 
 /**
@@ -33,7 +53,18 @@ function createAxes(g, xAxis, yAxis, height) {
 function createBarChart(g, currentData, x, y, color, tip, height) {
   // TODO: Dessiner les cercles à bandes en utilisant les échelles spécifiées.
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'une barre est survolée.
+  const bars = g.selectAll(".bar").data(currentData.destinations).enter()
 
+  const margin = 20
+  const bar_width = (x.range()[1]/currentData.destinations.length) - margin
+  bars.append("rect")
+      .attr("x", d => x(d.name) + margin/2)
+      .attr("y", d => y(d.count))
+      .attr("width", bar_width)
+      .attr("height", d => height - y(d.count))
+      .attr("fill", d => color(d.name))
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
 }
 
 /**
@@ -50,7 +81,16 @@ function transition(g, newData, y, yAxis, height) {
    - Réaliser une transition pour mettre à jour l'axe des Y et la hauteur des barres à partir des nouvelles données.
    - La transition doit se faire en 1 seconde.
    */
-
+  // Updating the vertical axis
+  g.select("g.yAxis").call(yAxis)
+  // updating the bars
+  const oneSeconde = 1000
+  const bars = g.selectAll("rect")
+  bars.data(newData.destinations)
+      .transition()
+      .duration(oneSeconde)
+      .attr("y", d => y(d.count))
+      .attr("height", d => height - y(d.count))
 }
 
 /**
@@ -64,6 +104,7 @@ function transition(g, newData, y, yAxis, height) {
 function getToolTipText(d, currentData, formatPercent) {
   // TODO: Retourner le texte à afficher dans l'infobulle selon le format demandé.
   //       Assurez-vous d'utiliser la fonction "formatPercent" pour formater le pourcentage correctement.
-
-  return "";
+  const reducer = (total, curr) => total + curr.count;
+  const sum = currentData.destinations.reduce(reducer, 0)
+  return ""+ d.count+" ("+formatPercent(d.count/sum)+")";
 }
