@@ -25,6 +25,34 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
      - Tronquer les noms des stations de BIXI qui sont trop longs (Pontiac et Métro Mont-Royal).
      - Afficher un élément "title" lorsqu'un groupe est survolé par la souris.
   */
+    const circles = g.selectAll("g").data(layout.groups).enter()
+        .append("g")
+        .classed("arc",true)
+
+    const path = circles.append("path")
+    path.attr("id",d => "arc-"+d.index)
+    path.attr("fill", d => color(d.index))
+    path.attr("d", arc);
+
+    const isPontiacOrMontRoyal = name => name === "Pontiac / Gilford" || name === "Métro Mont-Royal (Rivard/Mont-Royal)"
+    const truncate = name => (name === "Pontiac / Gilford")? "Pontiac" : "Métro Mont-Royal"
+    const formatName = name => isPontiacOrMontRoyal(name) ? truncate(name) : name
+    const label = circles.append("text")
+    label.attr("fill", "white")
+         .attr("font-size","11px")
+         .attr("font-weigth","bold")
+         .attr("dx","0.7em")
+         .attr("dy","1.4em")
+         .append("textPath")
+         .attr("href",d => "#arc-"+d.index)
+         .style("text-anchor","start")
+         .text(d => formatName(data[d.index].name));
+
+    // circles.append("svg:title")
+    // .text(d => {
+    //   const sum = d3.sum(data[d.index].destinations)
+    //   return data[d.index].name+": "+formatPercent(sum/total)+" des departs"
+    // });
 
 }
 
