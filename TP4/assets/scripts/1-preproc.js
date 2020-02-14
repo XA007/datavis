@@ -13,7 +13,7 @@
  */
 function domainColor(color, data) {
   // TODO: Préciser le domaine de l'échelle de couleurs en y associant les stations de BIXI utilisées.
-  const  stations = data.map( d => d.name)
+  const stations = data.map(d => d.name)
   color.domain(stations)
 }
 
@@ -24,8 +24,9 @@ function domainColor(color, data) {
  * @param data    Données provenant du fichier JSON.
  */
 function domainX(x, data) {
-  // TODO: Préciser le domaine pour la variable "x" en y associant les stations de BIXI utilisées.
-
+  // TODO: Préciser le domaine pour la variable "x" en y associant les stations de BIXI utilisées
+  const stations = data.map(d => d.name)
+  x.domain(stations)
 }
 
 /**
@@ -36,7 +37,9 @@ function domainX(x, data) {
  */
 function domainY(y, currentData) {
   // TODO: Préciser le domaine pour la variable "y" en prenant comme minimum et maximum le nombre de trajets vers une station de BIXI.
-
+  const currentCounts = currentData.destinations.map( d => d.count)
+  const maxCount = d3.max(currentCounts)
+  y.domain([0,maxCount])
 }
 
 /**
@@ -46,8 +49,8 @@ function domainY(y, currentData) {
  * @return {Array}    Une matrice de 10 x 10 indiquant le nombre de trajets partant et se dirigeant vers une station précise.
  */
 function getMatrix(data) {
-  // TODO: Calculer la matrice d'adjacence pour créer le diagramme à cordes.
-  return [];
+  // TODO: Calculer la matrice d'adjacence pour créer le diagramme à cordes. 
+  return data.map(station => station.destinations.map( d => d.count));
 }
 
 /**
@@ -57,5 +60,7 @@ function getMatrix(data) {
  */
 function getTotal(data) {
   // TODO: Calculer le nombre total de trajets réalisés pour le mois d'août 2015.
-  return 0;
+  const countsMatrix = data.map(station => station.destinations.map( d => d.count))
+  const sumByStation = countsMatrix.map( c => d3.sum(c))
+  return d3.sum(sumByStation)
 }
