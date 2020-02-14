@@ -25,6 +25,41 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
      - Tronquer les noms des stations de BIXI qui sont trop longs (Pontiac et Métro Mont-Royal).
      - Afficher un élément "title" lorsqu'un groupe est survolé par la souris.
   */
+    const isPontiacOrMontRoyal = name => name === "Pontiac / Gilford" || name === "Métro Mont-Royal (Rivard/Mont-Royal)"
+    const truncate = name => (name === "Pontiac / Gilford")? "Pontiac" : "Métro Mont-Royal"
+    console.log(layout.groups)
+    let group = g
+        .selectAll("g")
+        .data(layout.groups)
+        .enter()
+        .append("g")
+        .classed("arcGroup",true)
+
+    let path =group.append("path")
+    path.attr("id",d => "arc-"+d.index)
+    path.attr("fill", d => color(d.index))
+    path.attr("d", arc);
+
+    group.append("text")
+    .attr("fill", "white")
+    .attr("font-size","12px")
+    .attr("dx","0.6em")
+    .attr("dy","1.4em")
+    .append("textPath")
+    .attr("xlink:href",d => "#arc-"+d.index)
+    .style("text-anchor","start") //place the text halfway on the arc
+    .text(d => isPontiacOrMontRoyal(data[d.index].name) ? truncate(data[d.index].name) : data[d.index].name);
+
+    group.append("svg:title")
+    .text(d => {
+      let sum = 0
+      data[d.index].destinations.forEach(dd=>
+        {
+          sum+=dd.count
+        }
+      )
+      return data[d.index].name+": "+formatPercent(sum/total)+" des departs"
+    });
 
 }
 
