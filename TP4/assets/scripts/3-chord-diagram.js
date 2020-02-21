@@ -28,15 +28,16 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
     const circles = g.selectAll("g").data(layout.groups).enter()
         .append("g")
         .classed("arc",true)
-
-    const path = circles.append("path")
-    path.attr("id",d => "arc-"+d.index)
-    path.attr("fill", d => color(d.index))
-    path.attr("d", arc);
-
+    // Diagramme groups
+    const arcPath = circles.append("path")
+    arcPath.attr("id", d=>"arc-"+d.index)
+    arcPath.attr("fill", d => color(d.index))
+    arcPath.attr("d", arc);
+    // Util functions
     const isPontiacOrMontRoyal = name => name === "Pontiac / Gilford" || name === "Métro Mont-Royal (Rivard/Mont-Royal)"
     const truncate = name => (name === "Pontiac / Gilford")? "Pontiac" : "Métro Mont-Royal"
     const formatName = name => isPontiacOrMontRoyal(name) ? truncate(name) : name
+    // Labels
     const label = circles.append("text")
     label.attr("fill", "white")
          .attr("font-size","11px")
@@ -44,16 +45,16 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
          .attr("dx","0.7em")
          .attr("dy","1.4em")
          .append("textPath")
-         .attr("href",d => "#arc-"+d.index)
+         .attr("href", d=>"#arc-"+d.index)
          .style("text-anchor","start")
          .text(d => formatName(data[d.index].name));
-
-    // circles.append("svg:title")
-    // .text(d => {
-    //   const sum = d3.sum(data[d.index].destinations)
-    //   return data[d.index].name+": "+formatPercent(sum/total)+" des departs"
-    // });
-
+    // Title
+    const tooltipLabel =  d => {
+      const sum = d3.sum(data[d.index].destinations, d=> d.count)
+      return data[d.index].name+": "+formatPercent(sum/total)+" des departs"
+    }
+    const tooltip = circles.append("title")
+    tooltip.text(d => tooltipLabel(d))
 }
 
 /**
@@ -74,7 +75,20 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
      - Créer les cordes du diagramme avec une opacité de 80%.
      - Afficher un élément "title" lorsqu'une corde est survolée par la souris.
   */
+  const chord = g.selectAll("chord").data(layout).enter()
+  
+  chord.append("path")
+       .attr("d", path)
+       .attr("fill", d => color(d.source.index))
+       .attr("class","chord")
 
+  const chordLabel = d => {
+    const from = data[d.source.index].name+" -> "+data[d.target.index].name+" "+formatPercent(d.source.value/total)
+    const to = ""
+    return from
+  }
+  const tooltip = chord.append("title")
+  tooltip.text(d => chordLabel(d))
 }
 
 /**
