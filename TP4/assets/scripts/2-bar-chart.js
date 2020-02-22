@@ -55,8 +55,8 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
   //       Assurez-vous d'afficher l'infobulle spécifiée lorsqu'une barre est survolée.
   const bars = g.selectAll(".bar").data(currentData.destinations).enter()
 
-  const margin = 20
-  const bar_width = (x.range()[1]/currentData.destinations.length) - margin
+  const margin = 10
+  const bar_width = (x.range()[1]/currentData.destinations.length) - margin/2
   bars.append("rect")
       .attr("x", d => x(d.name) + margin/2)
       .attr("y", d => y(d.count))
