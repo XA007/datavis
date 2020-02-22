@@ -75,20 +75,20 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
      - Créer les cordes du diagramme avec une opacité de 80%.
      - Afficher un élément "title" lorsqu'une corde est survolée par la souris.
   */
-  const chord = g.selectAll("chord").data(layout).enter()
+  const arrowRigth = " &rarr; "
+  const fromSource = d => data[d.source.index].name + arrowRigth + data[d.target.index].name + " " +formatPercent(d.source.value/total)
+  const toSource = d => data[d.target.index].name + arrowRigth + data[d.source.index].name + " " +formatPercent(d.target.value/total) 
+  const chordLabel = d => fromSource(d) + "\n" + toSource(d)
   
-  chord.append("path")
-       .attr("d", path)
-       .attr("fill", d => color(d.source.index))
-       .attr("class","chord")
-
-  const chordLabel = d => {
-    const from = data[d.source.index].name+" -> "+data[d.target.index].name+" "+formatPercent(d.source.value/total)
-    const to = ""
-    return from
-  }
-  const tooltip = chord.append("title")
-  tooltip.text(d => chordLabel(d))
+  g.selectAll("chord")
+    .data(layout)
+    .enter()
+    .append("path")
+    .attr("d", path)
+    .attr("fill", d => color(d.source.index))
+    .attr("class","chord")
+    .append("title")
+    .html( d => chordLabel(d))
 }
 
 /**
@@ -102,5 +102,15 @@ function initializeGroupsHovered(g) {
        opacité de 80%. Toutes les autres cordes doivent être affichées avec une opacité de 10%.
      - Rétablir l'affichage du diagramme par défaut lorsque la souris sort du cercle du diagramme.
   */
+  // Events
+  const onMouseOver = arc => g.selectAll(".chord").each( function(c) {
+    const notRelated = arc.index!=c.source.index && arc.index!=c.target.index
+    if (notRelated) 
+      d3.select(this).classed("fade", true)  
+  })
+  const onMouseOut = _ => g.selectAll(".chord").classed("fade", false)
 
+  g.selectAll(".arc")
+   .on("mouseover", arc => onMouseOver(arc))
+   .on("mouseout", _ => onMouseOut())
 }
