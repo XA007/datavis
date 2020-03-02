@@ -1,29 +1,30 @@
 "use strict";
 
 /**
- * Fichier permettant de gérer l'affichage d'un résultat de recherche sur la carte.
+ * File to display a search result on the map
  */
 
 
 /**
- * Permet d'effectuer un zoom automatique sur la circonscription recherchée afin de la mettre en évidence.
+ * Allows you to automatically zoom on the searched distrcy to make it stand out
  *
- * @param map           La carte Leaflet.
- * @param g             Le groupe dans lequel les tracés des circonscriptions ont été créés.
- * @param districtId    Le numéro de la circonscription.
- * @param bound         La borne a été utiliser pour réaliser un zoom sur la région.
- * @param showPanel     La fonction qui doit être appelée pour afficher le panneau d'informations.
+ * @param map           The Leaflet map. 
+ * @param g             The group in which the traces of the districts were created 
+ * @param districtId    The number of the district. 
+ * @param bound         The bound used to zoom on the region
+ * @param showPanel     The function that must be called to display the information panel
  *
  * @see http://leafletjs.com/reference-0.7.7.html#map-fitbounds
  */
 function search(map, g, districtId, bound, showPanel) {
-  /* TODO: Effectuer un zoom en utilisant la fonction "fitBounds" de Leaflet en respectant les contraintes suivantes:
-       - Le niveau de zoom maximum doit être de 8;
-       - Le pan doit être animé (durée de 1s et "easeLinearity" de 0.5s);
-       - Le zoom doit être animé.
 
-      Sélectionner la zone recherchée en lui appliquant la classe "selected". De plus, afficher le panneau d'informations
-      pour cette circonscription en faisant appel à la fonction "showPanel".
+     /* TODO: Implement a zoom using the function "fitBounds" from Leaflet and respecting these constraints:
+       - The maximum zoom level must be 8;
+       - The pan must be animated (diration of 1s and "easeLinearity" of 0.5s);
+       - The zoom must be animated
+
+      Select the searched area by applying the class "selected" to it. Also, display the information panel for this
+      district using the function "showPanel"
    */
 
 }

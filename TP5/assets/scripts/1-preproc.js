@@ -1,60 +1,48 @@
 "use strict";
 
 /**
- * Fichier permettant de traiter les données provenant du fichier CSV.
+ * File to process data from the CSV. 
  */
 
 
 /**
- * Précise le domaine et la plage de couleurs pour l'échelle qui est utilisées pour distinguer les partis politiques.
+ * Specifies the domain and the range of colors for the scale to distinguish the political parties. 
  *
- * @param color     Échelle de couleurs.
- * @param parties   Les informations à utiliser sur les différents partis.
+ * @param color     Color scale.
+ * @param parties   The information to use for the different parties. 
  */
 function colorScale(color, parties) {
-  // TODO: Préciser le domaine de l'échelle en y associant chacun des partis politique de la liste spécifiée en paramètre.
-  //       De plus, préciser la gamme de couleurs en spécifiant les couleurs utilisées par chacun des partis.
-  console.log(parties)
-  let partiesList = []
-  let colors = []
-  parties.forEach(party => {
-    partiesList.push(party.name)
-    colors.push(party.color)
-  });  
-
-  color.domain(partiesList).range(colors)
+  // TODO: Specify the domain of the scale in y associating each of the parties passed as parameter
+  //       Also, specify the range of colors by specifying the color used for each party. 
 }
 
 /**
- * Convertit chacun des nombres provenant du fichier CSV en type "number".
- *
- * @param data      Données provenant du fichier CSV.
+ * Converts each of the number from the CSV file to type "number"
+ * @param data      Data from the CSV. 
  */
 function convertNumbers(data) {
-  // TODO: Convertir les propriétés "id" et "votes" en type "number" pour chacun des éléments de la liste.
-
+  // TODO: Convert the properties "id" and "votes" to type "number" for each of the elements in the list
 }
 
 /**
- * Réorganise les données afin de combiner les résultats pour une même circonsription.
+ * Reorganizes the data to combine the results for a given district 
  *
- * @param data      Données provenant du fichier CSV.
- * @return {Array}  Les données réorganisées qui seront utilisées. L'élément retourné doit être un tableau d'objets
- *                  comptant 338 entrées, c'est-à-dire, une entrée par circonscription. Chacune des entrées devra
- *                  présenter les résultats pour chacun des candidats triés en ordre décroissant (du candidat ayant
- *                  obtenu le plus de votes à celui en ayant reçu le moins). L'objet retourné doit avoir la forme suivante:
+ * @param data      Data from the CSV. 
+ * @return {Array}  The reorganized data to usee. The return element must be a table of objects with 338 entries, meaning
+ *                  one entry per riding. Each entry must present the results for each candidate in decreasing order (from
+ *                  the candidate with the most votes to the one with the least votes). The returned object must look like: 
  *
  *                  [
  *                    {
- *                      id: number              // Le numéro de la circonscription
- *                      name: string,           // Le nom de la circonscription
- *                      results: [              // Le tableau contenant les résultats pour les candidats s'étant présentés.
- *                                              // *** Ce tableau doit être trié en ordre décroissant de votes. ***
+ *                      id: number              // The number of the district 
+ *                      name: string,           // The number of the district 
+ *                      results: [              // the table with the results for the candidates
+ *                                              // *** This table must be sorted in decreasing order of votes. ***
  *                        {
- *                          candidate: string,  // Le nom du candidat
- *                          votes: number,      // Le nombre de votes obtenus pour le candidat
- *                          percent: string,    // Le pourcentage des votes obtenus par le candidat
- *                          party: string       // Le parti politique du candidat
+ *                          candidate: string,  // The name of the candidate
+ *                          votes: number,      // The number of votes for the candidate
+ *                          percent: string,    // The percentage of votes for the candidate
+ *                          party: string       // The political party of the candidate
  *                        },
  *                        ...
  *                      ]
@@ -63,7 +51,7 @@ function convertNumbers(data) {
  *                  ]
  */
 function createSources(data) {
-  // TODO: Retourner l'objet ayant le format demandé. Assurez-vous de trier le tableau "results" pour chacune des entrées
-  //       en ordre décroissant de votes (le candidat gagnant doit être le premier élément du tableau).
+  // TODO: Return the object with the format described above. Make sure to sort the table "results" for each entry 
+  // in decreasing order of the votes (the winning candidate must be the first element of the table)
 
 }

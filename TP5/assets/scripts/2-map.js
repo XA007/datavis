@@ -1,25 +1,26 @@
 "use strict";
 
 /**
- * Fichier permettant de gérer l'affichage de la carte.
+ * File to generate the display of the map. 
  */
 
 
 /**
- * Initialise le fond de carte qui doit être utilisé et la position d'affichage initial.
+ * Initializes the background of the map that must be used and the position of the initial display. 
  *
- * @param L     Le contexte Leaflet.
- * @param map   La carte Leaflet.
+ * @param L     The Leaflet context.
+ * @param map   The Leaflet map.
  *
  * @see https://gist.github.com/d3noob/9211665
  */
 function initTileLayer(L, map) {
-  /* TODO: Initialiser le "tileLayer" avec les propriétés suivantes:
+
+    /* TODO: Initialize the "tileLayer" with the following properties:
        - URL du fond de carte: https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png;
        - Zoom maximum: 10;
        - Zoom minimum: 1.
 
-     Régler l'affichage initial (view) de la carte aux valeurs suivantes:
+     Set the initial view of the map with the following values:
        - Coordonnées: [57.3, -94.7];
        - Niveau de zoom: 4.
    */
@@ -27,52 +28,52 @@ function initTileLayer(L, map) {
 }
 
 /**
- * Initialise le contexte SVG qui devra être utilisé au-dessus de la carte Leaflet.
+ * Initializes the SVG context to be used on top of the Leaflet map. 
  *
- * @param map   La carte Leaflet.
- * @return      L'élément SVG créé.
+ * @param map   The Leaflet map. 
+ * @return      the created SVG element. 
  *
  * @see https://gist.github.com/d3noob/9211665
  */
 function initSvgLayer(map) {
-  // TODO: Créer l'élément SVG en vous basant sur l'exemple fourni. Assurez-vous de créer un élément "g" dans l'élément SVG.
+  // TODO: Create the SVG element basing yourself on the above example. Make sure to create a "g" element in the SVG element. 
 
 }
 
 /**
- * Crée les tracés des circonscriptions sur le contexte SVG qui se trouve au-dessus de la carte Leaflet.
+ * Creates the traces for the districts on the SVF context aboove the Leaflet map. 
  *
- * @param g             Le groupe dans lequel les tracés des circonscriptions doivent être créés.
- * @param path          La fonction qui doit être utilisée pour tracer les entités géométriques selon la bonne projection.
- * @param canada        Les entités géographiques qui doivent être utilisées pour tracer les circonscriptions.
- * @param sources       Les données contenant les informations sur chacune des circonscriptions.
- * @param color         L'échelle de couleurs qui est associée à chacun des partis politiques.
- * @param showPanel     La fonction qui doit être appelée pour afficher le panneau d'informations.
+ * @param g             The group where you should create the traces for the districts. 
+ * @param path          The function used to trace the geometric entities according to the appropriate projection
+ * @param canada        The geographic entities used to trace the districts. 
+ * @param sources       The data containing the information on each district. 
+ * @param color         The color scale mapping to each party. 
+ * @param showPanel     The function called to display the panel. 
  */
 function createDistricts(g, path, canada, sources, color, showPanel) {
-  /* TODO: Créer les tracés des circonscriptions. Assurez-vous de respecter les spécifications suivantes:
-       - La couleur de la circonscription doit correspondre à la couleur du parti du candidat gagnant;
-       - L'opacité de la couleur (fill-opacity) doit être de 80%;
-       - La couleur des traits doit être "#333";
-       - Lorsqu'une circonscription est cliquée, celle-ci doit devenir sélectionnée (classe "selected") et le panneau
-         d'informations associé à cette circonscription doit faire son apparition (utiliser la fonction "showPanel").
-         Il est à noter qu'il est possible de sélectionner uniquement une circonscription à la fois.
+  /* TODO: Create the traces for the districts. Make sur to follow these specs: 
+       - The color of the district should correspond to the party of the winning candidate
+       - The fill-opacity should be 80%;
+       - The color of the strokes should be "#333";
+       - When a district is clicked, it should get selected (class "selected") and the information panel 
+         associated with the riding should appear (use showPanel). Note it is only possible to select one
+         riding at a time. 
    */
 
 }
 
 /**
- * Met à jour la position et la taille de l'élément SVG, la position du groupe "g" et l'affichage des tracés lorsque
- * la position ou le zoom de la carte est modifié.
+ * Upate the position and the size of the SVG element, the position of the group "g" and the display of the traces
+ * when the position or the zoom of the map is modified. 
  *
- * @param svg       L'élément SVG qui est utilisé pour tracer les éléments au-dessus de la carte Leaflet.
- * @param g         Le groupe dans lequel les tracés des circonscriptions ont été créés.
- * @param path      La fonction qui doit être utilisée pour tracer les entités géométriques selon la bonne projection.
- * @param canada    Les entités géographiques qui doivent être utilisées pour tracer les circonscriptions.
+ * @param svg       The SVG element used to trace the elements over the Leaflet map. 
+ * @param g         The group where the traces of the districts are created. 
+ * @param path      The function that should be used to trace the geometric entities according to 
+ *                  the correct projection. 
+ * @param canada    The geographic entities that should be used to trace the districts. 
  *
  * @see https://gist.github.com/d3noob/9211665
  */
 function updateMap(svg, g, path, canada) {
-  // TODO: Mettre à jour l'élément SVG, la position du groupe "g" et l'affichage des tracés en vous basant sur l'exemple fourni.
-
+  // TODO: Update the SVG element, the postion of the group "g" and the display of the traces based on the provided example 
 }

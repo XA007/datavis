@@ -1,76 +1,75 @@
 "use strict";
 
 /**
- * Fichier permettant de gérer l'affichage du panneau d'informations pour une circonscription.
+ * File to deal with the display of the information panel for a district
  */
 
 
 /**
- * Met à jour les domaines X et Y utilisés par le diagramme à bandes horizontales lorsque les données sont modifiées.
+ * Update the X and Y domains used by the horizontal bar chart when the data is modified. 
  *
- * @param districtSource    Les données associées à une circonscription.
- * @param x                 L'échelle X.
- * @param y                 L'échelle Y.
+ * @param districtSource    The data associated to a district
+ * @param x                 The X scale
+ * @param y                 The Y scale
  */
 function updateDomains(districtSource, x, y) {
-  /* TODO: Mettre à jour les domaines selon les spécifications suivantes:
-       - Le domaine X varie entre le minimum et le maximum de votes obtenus pour les candidats de la circonscription;
-       - Le domaine Y correspond au nom des partis politiques associés aux candidats qui se sont présentés. Assurez-vous
-         que les partis sont triés en ordre décroissant de votes obtenus (le parti du candidat gagnant doit se retrouver
-         en premier).
+  /* TODO: Update the domains according to the following specifications:
+       - The domain in X varies between the minimum and the maximum of votes obtained by the candidates of the district;
+       - The domain in Y correspongs to the name of the political parties associated to the winning candidates. Make sure the parties
+         are sorted in decreasing order of votes obtained (i.e. the winner's party should be first)
    */
-
 }
 
 /**
- * Met à jour les informations textuelles se trouvant dans le panneau à partir des nouvelles données fournies.
+ * Update the textual information in the information panel based on the new data
  *
- * @param panel             L'élément D3 correspondant au panneau.
- * @param districtSource    Les données associées à une circonscription.
- * @param formatNumber      Fonction permettant de formater correctement des nombres.
+ * @param panel             The D3 element corresponding to the information panel.
+ * @param districtSource    The data associated to a district.
+ * @param formatNumber      Function to correctly format numbers. 
  */
 function updatePanelInfo(panel, districtSource, formatNumber) {
-  /* TODO: Mettre à jour les informations textuelles suivantes:
-       - Le nom de la circonscription ainsi que le numéro;
-       - La nom du candidat gagnant ainsi que son parti;
-       - Le nombre total de votes pour tous les candidats (utilisez la fonction "formatNumber" pour formater le nombre).
+  /* TODO: Update the following textual information: 
+       - The name and number of the district;
+       - The name of the winning candidate and his or her party;
+       - The total number of votes for all candidates (use the function "formatNumber" to format the number).
    */
 
 }
 
 /**
  * Met à jour le diagramme à bandes horizontales à partir des nouvelles données de la circonscription sélectionnée.
+ * Updates the horizontal bar chart based on the new data from the selected district. 
  *
- * @param gBars             Le groupe dans lequel les barres du graphique doivent être créées.
- * @param gAxis             Le groupe dans lequel l'axe des Y du graphique doit être créé.
- * @param districtSource    Les données associées à une circonscription.
- * @param x                 L'échelle X.
- * @param y                 L'échelle Y.
- * @param yAxis             L'axe des Y.
- * @param color             L'échelle de couleurs qui est associée à chacun des partis politiques.
- * @param parties           Les informations à utiliser sur les différents partis.
+ * @param gBars             The group where the bars should be created. 
+ * @param gAxis             The group where the Y axis of the graph should be created. 
+ * @param districtSource    The data associated to a riding. 
+ * @param x                 The X scale. 
+ * @param y                 The Y scale. 
+ * @param yAxis             The Y axis. 
+ * @param color             The color scale associated to each political party. 
+ * @param parties           The information to use on the different parties. 
  *
  * @see https://bl.ocks.org/hrecht/f84012ee860cb4da66331f18d588eee3
  */
 function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, parties) {
-  /* TODO: Créer ou mettre à jour le graphique selon les spécifications suivantes:
-       - Le nombre de votes des candidats doit être affiché en ordre décroissant;
-       - Le pourcentage obtenu par chacun des candidat doit être affiché à droite de le barre;
-       - La couleur de la barre doit correspondre à la couleur du parti du candidat. Si le parti du candidat n'est pas
-         dans le domaine de l'échelle de couleurs, la barre doit être coloriée en gris;
-       - Le nom des partis doit être affiché sous la forme abrégée. Il est possible d'obtenir la forme abrégée d'un parti
-         via la liste "parties" passée en paramètre. Il est à noter que si le parti ne se trouve pas dans la liste "parties",
-         vous devez indiquer "Autre" comme forme abrégée.
+     /* TODO: Create or update the graphic according to the following specifications:
+       - The number of votes of the candidates must be shown in decreasing order
+       - The percentage of votes received by each candidate must be shown to the right of the bar
+       - The color of the bar must correspond to the candidate's party. If the party of the candidate is not
+         in the domain of the color scale, the bar should be colored in grey
+      - The name of the parties must be shown in shortened format. It is possible to obtain the shortened format of a party
+        with the list "parties" passed as a parameter. Note that if the party is not in the list "parties", you must 
+        write "Autre" as the shortened format. 
    */
 
 }
 
 /**
- * Réinitialise l'affichage de la carte lorsque la panneau d'informations est fermé.
+ * Reinitialize the map display when the information panel is closed. 
  *
- * @param g     Le groupe dans lequel les tracés des circonscriptions ont été créés.
+ * @param g     The group in which the traces for the circumsciptions is created. 
  */
 function reset(g) {
-  // TODO: Réinitialiser l'affichage de la carte en retirant la classe "selected" de tous les éléments.
+  // TODO: Reinitialize the map's display by removing the "selected" class from all elements
 
 }

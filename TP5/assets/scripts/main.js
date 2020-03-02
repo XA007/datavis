@@ -1,8 +1,8 @@
 /**
- * Fichier principal permettant de gérer la carte. Ce fichier utilise les autres fichiers
- * que vous devez compléter.
+ * Main file for the map. This file uses the other files
+ * you must complete. 
  *
- * /!\ Aucune modification n'est nécessaire dans ce fichier!
+ * /!\ No modification is needed in this file!
  */
 (function (L, d3, topojson, searchBar, localization) {
   "use strict";
@@ -31,14 +31,14 @@
   var barChartWidth = 300 - barChartMargin.left - barChartMargin.right;
   var barChartHeight = 150 - barChartMargin.top - barChartMargin.bottom;
 
-  /***** Échelles utilisées *****/
+  /***** Scales *****/
   var color = d3.scaleOrdinal();
   var x = d3.scaleLinear().range([0, barChartWidth]);
   var y = d3.scaleBand().range([0, barChartHeight]).padding(0.1);
 
   var yAxis = d3.axisLeft(y);
 
-  /***** Création des éléments du diagramme à barres *****/
+  /***** Creation of bar chart elements *****/
   var barChartSvg = panel.select("svg")
     .attr("width", barChartWidth + barChartMargin.left + barChartMargin.right)
     .attr("height", barChartHeight + barChartMargin.top + barChartMargin.bottom);
@@ -50,7 +50,7 @@
   var barChartAxisGroup = barChartGroup.append("g")
     .attr("class", "axis y");
 
-  /***** Chargement des données *****/
+  /***** Loading data *****/
   var promises = [];
   promises.push(d3.json("./data/canada.json"));
   promises.push(d3.csv("./data/data.csv"));
@@ -61,7 +61,7 @@
       var canada = topojson.feature(canadaTopoJson, canadaTopoJson.objects.Canada);
       var data = results[1];
 
-      /***** Prétraitement des données *****/
+      /***** Data preprocessing *****/
       data.forEach(function (d) {
         d.percent = d.percent.replace(".", ",");
       });
@@ -69,7 +69,7 @@
       convertNumbers(data);
       var sources = createSources(data);
 
-      /***** Initialisation de la carte *****/
+      /***** Map initialization *****/
       initTileLayer(L, map);
       var mapSvg = initSvgLayer(map);
 	  var g = undefined;
@@ -84,7 +84,7 @@
       });
       updateMap(mapSvg, g, path, canada);
 
-      /***** Recherche d'une circonscription *****/
+      /***** Search for a district *****/
       var autoCompleteSources = d3.nest()
         .key(function (d) {
           return d.id;
@@ -112,7 +112,7 @@
         ], showPanel);
       };
 
-      /***** Gestion du panneau d'informations *****/
+      /***** Information panel management *****/
       panel.select("button")
         .on("click", function () {
           reset(g);
@@ -120,9 +120,9 @@
         });
 
       /**
-       * Affichage du panneau d'informations pour une certain circonscription.
+       * Display the panel for a specific distract.
        *
-       * @param districtId    Le numéro de circonscription à utiliser pour afficher les bonnes informations.
+       * @param districtId    The number of the district to use to show the right information.
        */
       function showPanel(districtId) {
         var districtSource = sources.find(function (e) {
@@ -137,10 +137,10 @@
     });
 
   /**
-   * Projete un point dans le repère de la carte.
+   * Projects a point in the map.
    *
-   * @param x   Le point X à projeter.
-   * @param y   Le point Y à projeter.
+   * @param x   The point X to project.
+   * @param y   The point Y to project.
    */
   function projectPoint(x, y) {
     var point = map.latLngToLayerPoint(new L.LatLng(y, x));
@@ -148,9 +148,9 @@
   }
 
   /**
-   * Trace un ensemble de coordonnées dans le repère de la carte.
+   * Traces a set of coordinates in the map
    *
-   * @return {*}  La transformation à utiliser.
+   * @return {*}  The transformation to use
    */
   function createPath() {
     var transform = d3.geoTransform({point: projectPoint});
