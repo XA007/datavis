@@ -25,6 +25,16 @@ function initTileLayer(L, map) {
        - Niveau de zoom: 4.
    */
 
+  const coordinates = [57.3, -30.7]
+  const zoom = 4
+  map.setView(coordinates)
+  map.setZoom(zoom)
+
+  const urlTemplate = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
+  const maxZoom = 10
+  const minZoom = 1
+  L.tileLayer(urlTemplate,{maxZoom,minZoom}).addTo(map)
+
 }
 
 /**
