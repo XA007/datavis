@@ -24,6 +24,7 @@ function initTileLayer(L, map) {
        - Coordonnées: [57.3, -94.7];
        - Niveau de zoom: 4.
    */
+ 
 
 }
 

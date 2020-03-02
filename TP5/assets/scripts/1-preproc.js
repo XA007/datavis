@@ -14,6 +14,9 @@
 function colorScale(color, parties) {
   // TODO: Specify the domain of the scale in y associating each of the parties passed as parameter
   //       Also, specify the range of colors by specifying the color used for each party. 
+  const partiesList = parties.map(p => p.name)
+  const colors = parties.map(p => p.color)
+  color.domain(partiesList).range(colors)
 }
 
 /**
@@ -22,6 +25,10 @@ function colorScale(color, parties) {
  */
 function convertNumbers(data) {
   // TODO: Convert the properties "id" and "votes" to type "number" for each of the elements in the list
+  data.forEach(d => {
+    d.id = Number(d.id)
+    d.votes = Number(d.votes)
+  })
 }
 
 /**
@@ -53,5 +60,39 @@ function convertNumbers(data) {
 function createSources(data) {
   // TODO: Return the object with the format described above. Make sure to sort the table "results" for each entry 
   // in decreasing order of the votes (the winning candidate must be the first element of the table)
+  // console.log(data)
+  const sources = []
+  const parties = Array.from(new Set(data.map(d=>d.id)))
+                       .map(id=>{
+                         return {
+                           id: id, 
+                           name: data.find(d => d.id === id).name
+                         }
+                      });
 
+  parties.forEach( party => {
+
+    const results = []
+    data.forEach( d => {
+      if(d.id = party.id)
+      {
+        const result = {
+          candidate: d.candidate,
+          votes : d.votes,
+          percent: d.percent,
+          party: d.party,
+        }
+        results.push(result)
+      }
+    })
+
+    const source = {
+      id: party.id,
+      name: party.name,
+      results: results
+    }
+    sources.push(source)
+  })
+  
+  return sources
 }
