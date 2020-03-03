@@ -20,11 +20,26 @@ function search(map, g, districtId, bound, showPanel) {
 
      /* TODO: Implement a zoom using the function "fitBounds" from Leaflet and respecting these constraints:
        - The maximum zoom level must be 8;
-       - The pan must be animated (diration of 1s and "easeLinearity" of 0.5s);
+       - The pan must be animated (duration of 1s and "easeLinearity" of 0.5s);
        - The zoom must be animated
 
       Select the searched area by applying the class "selected" to it. Also, display the information panel for this
       district using the function "showPanel"
    */
+  
+   const mapViewOptions = {
+      maxZoom: 8,
+      zoom: { animate: true },
+      pan: {
+         animate: true,
+         duration: 1,
+         easeLinearity: 0.5
+      }
+   }
+   map.fitBounds(bound,mapViewOptions);
+   
+   const searchResult = d3.selectAll(".canadaPath").filter(district => district.properties.NUMCF===districtId)
+   searchResult.classed("selected",true)
 
+   showPanel(districtId)
 }
