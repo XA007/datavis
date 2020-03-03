@@ -24,7 +24,6 @@ function initTileLayer(L, map) {
        - Coordonnées: [57.3, -94.7];
        - Niveau de zoom: 4.
    */
- 
 
   const coordinates = [57.3, -30.7]
   const zoom = 4
@@ -48,7 +47,9 @@ function initTileLayer(L, map) {
  */
 function initSvgLayer(map) {
   // TODO: Create the SVG element basing yourself on the above example. Make sure to create a "g" element in the SVG element. 
-
+  const svg = d3.select(map.getPanes().overlayPane).append("svg")
+  svg.append("g").attr("class", "leaflet-zoom-hide");
+  return svg
 }
 
 /**
@@ -70,7 +71,6 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
          associated with the riding should appear (use showPanel). Note it is only possible to select one
          riding at a time. 
    */
-
 }
 
 /**

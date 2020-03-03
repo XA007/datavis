@@ -37,7 +37,7 @@ function search(map, g, districtId, bound, showPanel) {
       }
    }
    map.fitBounds(bound,mapViewOptions);
-   
+
    const searchResult = d3.selectAll(".canadaPath").filter(district => district.properties.NUMCF===districtId)
    searchResult.classed("selected",true)
 
