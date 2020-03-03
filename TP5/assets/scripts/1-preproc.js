@@ -60,7 +60,6 @@ function convertNumbers(data) {
 function createSources(data) {
   // TODO: Return the object with the format described above. Make sure to sort the table "results" for each entry 
   // in decreasing order of the votes (the winning candidate must be the first element of the table)
-  // console.log(data)
   const sources = []
   const parties = Array.from(new Set(data.map(d=>d.id)))
                        .map(id=>{
@@ -69,12 +68,10 @@ function createSources(data) {
                            name: data.find(d => d.id === id).name
                          }
                       });
-
   parties.forEach( party => {
-
     const results = []
     data.forEach( d => {
-      if(d.id = party.id)
+      if(d.id === party.id)
       {
         const result = {
           candidate: d.candidate,
@@ -93,6 +90,6 @@ function createSources(data) {
     }
     sources.push(source)
   })
-  
+
   return sources
 }
