@@ -18,6 +18,15 @@ function updateDomains(districtSource, x, y) {
        - The domain in Y correspongs to the name of the political parties associated to the winning candidates. Make sure the parties
          are sorted in decreasing order of votes obtained (i.e. the winner's party should be first)
    */
+  const results = districtSource.results
+  const votes = results.map(r=> r.votes)
+
+  const maxVotes = d3.max(votes)
+  const minVotes = d3.min(votes)
+  x.domain([minVotes, maxVotes])
+  
+  const parties = results.map(r => r.party)
+  y.domain(parties.reverse())
 }
 
 /**
@@ -33,7 +42,13 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
        - The name of the winning candidate and his or her party;
        - The total number of votes for all candidates (use the function "formatNumber" to format the number).
    */
-
+  panel.select("#district-name").html(`${districtSource.name} [${districtSource.id}]`)
+  
+  const elected = districtSource.results[districtSource.results.length - 1]
+  panel.select("#elected-candidate").html(`${elected.candidate} (${elected.party})`)
+  
+  const totalVotes = d3.sum(districtSource.results, result => result.votes)
+  panel.select("#votes-count").html(`${formatNumber(totalVotes)} votes`)
 }
 
 /**
@@ -61,7 +76,36 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
         with the list "parties" passed as a parameter. Note that if the party is not in the list "parties", you must 
         write "Autre" as the shortened format. 
    */
+  
+  gBars.selectAll(".bar").remove()
 
+  const shortenFormat = d => { 
+    const party = parties.find(p=> p.name === d)
+    return (party) ? party.abbreviation : "Autre"
+  }
+
+  yAxis.tickFormat(d => shortenFormat(d))
+  gAxis.classed("y axis",true).call(yAxis)
+
+  const bars = gBars.selectAll(".bar")
+                    .data(districtSource.results)
+                    .enter()
+                    .append("g")
+                    .classed("bar",true)
+
+  const fillColor = party => color.domain().includes(party) ? color(party) : "grey" 
+  bars.append("rect")
+      .attr("y", d => y(d.party))
+      .attr("width", d => x(d.votes))
+      .attr("height", y.bandwidth())
+      .attr("fill", d => fillColor(d.party))
+
+  const margin = { x: 3, y: y.bandwidth()/2}
+  bars.append("text")
+      .attr("x", d => x(d.votes) + margin.x)
+      .attr("y", d => y(d.party) + margin.y)
+      .style("alignment-baseline","middle")
+      .text(d => d.percent)
 }
 
 /**
@@ -71,5 +115,5 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
  */
 function reset(g) {
   // TODO: Reinitialize the map's display by removing the "selected" class from all elements
-
+  g.selectAll(".selected").classed("selected",false)
 }
