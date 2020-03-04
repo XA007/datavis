@@ -38,7 +38,8 @@ function search(map, g, districtId, bound, showPanel) {
    }
    map.fitBounds(bound,mapViewOptions);
 
-   const searchResult = d3.selectAll(".canadaPath").filter(district => district.properties.NUMCF===districtId)
+   g.selectAll(".canadaPath").classed("selected", false) // to handle the case when a distict is already selected
+   const searchResult = g.selectAll(".canadaPath").filter(district => district.properties.NUMCF===districtId)
    searchResult.classed("selected",true)
 
    showPanel(districtId)
