@@ -81,7 +81,7 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
 
   const winninParty = (id) => {
     const winParty = sources.find(d => d.id === id).results
-    return winParty[winParty.length - 1].party
+    return winParty[0].party
   }
 
   const onClick = id => {

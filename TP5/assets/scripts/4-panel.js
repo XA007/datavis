@@ -26,7 +26,7 @@ function updateDomains(districtSource, x, y) {
   x.domain([minVotes, maxVotes])
   
   const parties = results.map(r => r.party)
-  y.domain(parties.reverse())
+  y.domain(parties)
 }
 
 /**
@@ -44,7 +44,7 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
    */
   panel.select("#district-name").html(`${districtSource.name} [${districtSource.id}]`)
   
-  const elected = districtSource.results[districtSource.results.length - 1]
+  const elected = districtSource.results[0]
   panel.select("#elected-candidate").html(`${elected.candidate} (${elected.party})`)
   
   const totalVotes = d3.sum(districtSource.results, result => result.votes)
@@ -76,7 +76,6 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
         with the list "parties" passed as a parameter. Note that if the party is not in the list "parties", you must 
         write "Autre" as the shortened format. 
    */
-  
   gBars.selectAll(".bar").remove()
 
   const shortenFormat = d => { 

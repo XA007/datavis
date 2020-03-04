@@ -61,17 +61,12 @@ function createSources(data) {
   // TODO: Return the object with the format described above. Make sure to sort the table "results" for each entry 
   // in decreasing order of the votes (the winning candidate must be the first element of the table)
   const sources = []
-  const parties = [...new Set(data.map(d=>d.id))]
-                       .map(id=>{
-                         return {
-                           id: id, 
-                           name: data.find(d => d.id === id).name
-                         }
-                      });
-  parties.forEach( party => {
+  const ids = [...new Set(data.map(d=>d.id))]
+ 
+  ids.forEach( id => {
     const results = []
     data.forEach( d => {
-      if(d.id === party.id)
+      if(d.id === id)
       {
         const result = {
           candidate: d.candidate,
@@ -82,14 +77,13 @@ function createSources(data) {
         results.push(result)
       }
     })
-
     const source = {
-      id: party.id,
-      name: party.name,
-      results: results
+      id: id,
+      name: data.find(d => d.id === id).name,
+      results: results.reverse()
     }
     sources.push(source)
   })
-
+  
   return sources
 }
