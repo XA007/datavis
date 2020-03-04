@@ -87,4 +87,27 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
  */
 function updateMap(svg, g, path, canada) {
   // TODO: Update the SVG element, the postion of the group "g" and the display of the traces based on the provided example 
+  const bounds = path.bounds(canada);
+  
+	const topLeftCorner = {
+    x:bounds[0][0],
+    y:bounds[0][1]
+  }
+
+  const bottomRightCorner = {
+    x:bounds[1][0],
+    y:bounds[1][1]
+  }
+
+  const width = bottomRightCorner.x - topLeftCorner.x
+  const height = bottomRightCorner.y - topLeftCorner.y
+  
+	svg.attr("width", width)
+		 .attr("height", height)
+		 .style("left", topLeftCorner.x + "px")
+     .style("top", topLeftCorner.y + "px")
+  
+  g.attr("transform", "translate(" + -topLeftCorner.x + "," + -topLeftCorner.y + ")")
+                                   
+  d3.selectAll("path.canadaPath").attr("d",path)
 }
