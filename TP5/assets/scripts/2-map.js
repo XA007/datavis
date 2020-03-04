@@ -71,6 +71,36 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
          associated with the riding should appear (use showPanel). Note it is only possible to select one
          riding at a time. 
    */
+  const opts = {
+    opacity: 0.8,
+    stroke: {
+      color: "#333",
+      width: 2,
+    }
+  }
+
+  const winninParty = (id) => {
+    const winParty = sources.find(d => d.id === id).results
+    return winParty[winParty.length - 1].party
+  }
+
+  const onClick = id => {
+    d3.selectAll(".canadaPath").classed("selected", false)
+    d3.selectAll(".canadaPath").filter(d => d.properties.NUMCF===id).classed("selected",true)
+    showPanel(id)
+  }
+
+  g.selectAll("g")
+   .data(canada.features)
+   .enter()
+   .append("path")
+   .attr("d",path)
+   .attr("class","canadaPath")
+   .style("fill-opacity", opts.opacity)
+   .attr("stroke-width",opts.stroke.width)
+   .attr("stroke", opts.stroke.color)
+   .attr("fill", d => color(winninParty(d.properties.NUMCF)))
+   .on("click", d => onClick(d.properties.NUMCF));
 }
 
 /**

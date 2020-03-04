@@ -61,7 +61,7 @@ function createSources(data) {
   // TODO: Return the object with the format described above. Make sure to sort the table "results" for each entry 
   // in decreasing order of the votes (the winning candidate must be the first element of the table)
   const sources = []
-  const parties = Array.from(new Set(data.map(d=>d.id)))
+  const parties = [...new Set(data.map(d=>d.id))]
                        .map(id=>{
                          return {
                            id: id, 
