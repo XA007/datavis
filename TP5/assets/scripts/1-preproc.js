@@ -60,30 +60,25 @@ function convertNumbers(data) {
 function createSources(data) {
   // TODO: Return the object with the format described above. Make sure to sort the table "results" for each entry 
   // in decreasing order of the votes (the winning candidate must be the first element of the table)
-  const sources = []
+  const getResults = id => {
+    const districtData = data.filter( d => d.id === id)
+    const results = districtData.map( d => {
+                        return {
+                            candidate: d.candidate,
+                            votes : d.votes,
+                            percent: d.percent,
+                            party: d.party,
+                          }
+                        })
+    return results.reverse()
+  }
+
   const ids = [...new Set(data.map(d=>d.id))]
- 
-  ids.forEach( id => {
-    const results = []
-    data.forEach( d => {
-      if(d.id === id)
-      {
-        const result = {
-          candidate: d.candidate,
-          votes : d.votes,
-          percent: d.percent,
-          party: d.party,
-        }
-        results.push(result)
+  return ids.map( id => {
+      return {
+        id: id,
+        name: data.find(d => d.id === id).name,
+        results: getResults(id) 
       }
     })
-    const source = {
-      id: id,
-      name: data.find(d => d.id === id).name,
-      results: results.reverse()
-    }
-    sources.push(source)
-  })
-  
-  return sources
 }
