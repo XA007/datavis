@@ -42,13 +42,16 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
        - The name of the winning candidate and his or her party;
        - The total number of votes for all candidates (use the function "formatNumber" to format the number).
    */
-  panel.select("#district-name").html(`${districtSource.name} [${districtSource.id}]`)
+  const title = districtSource.name + " [" +districtSource.id + "]"
+  panel.select("#district-name").html(title)
   
   const elected = districtSource.results[0]
-  panel.select("#elected-candidate").html(`${elected.candidate} (${elected.party})`)
+  const electedCandidate = elected.candidate + " " + elected.party
+  panel.select("#elected-candidate").html(electedCandidate)
   
   const totalVotes = d3.sum(districtSource.results, result => result.votes)
-  panel.select("#votes-count").html(`${formatNumber(totalVotes)} votes`)
+  const result = formatNumber(totalVotes) + " votes"
+  panel.select("#votes-count").html(result)
 }
 
 /**
